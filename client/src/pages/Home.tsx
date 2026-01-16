@@ -1,0 +1,910 @@
+import { useEffect, useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Sparkles, Heart, TrendingUp, Users, Star, ArrowRight, Check } from "lucide-react";
+
+export default function Home() {
+  const [isVisible, setIsVisible] = useState<{ [key: string]: boolean }>({});
+  const observerRef = useRef<IntersectionObserver | null>(null);
+
+  useEffect(() => {
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible((prev) => ({ ...prev, [entry.target.id]: true }));
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    const elements = document.querySelectorAll("[data-animate]");
+    elements.forEach((el) => observerRef.current?.observe(el));
+
+    return () => observerRef.current?.disconnect();
+  }, []);
+
+  const scrollToCTA = () => {
+    document.getElementById("cta-section")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  return (
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: "url(/hero-galaxy.jpg)",
+            filter: "brightness(0.5)",
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-purple-900/60 via-purple-900/40 to-background" />
+        
+        <div className="container relative z-10 text-center py-20">
+          <div className="max-w-4xl mx-auto space-y-8 animate-fade-in-up">
+            <div className="inline-block mb-4">
+              <span className="text-secondary text-sm font-medium tracking-widest uppercase bg-secondary/20 px-6 py-2 rounded-full">
+                今月限定10名様
+              </span>
+            </div>
+            
+            <h1 className="text-2xl sm:text-3xl md:text-6xl lg:text-7xl font-bold text-white leading-tight" style={{ textShadow: '0 4px 20px rgba(0,0,0,0.8), 0 2px 10px rgba(0,0,0,0.6)' }}>
+              地球の重い制限を大解放して、
+              <span className="text-secondary" style={{ textShadow: '0 4px 20px rgba(212,175,55,0.8), 0 2px 10px rgba(0,0,0,0.6)' }}>本来の軽やかな自分</span>に還る
+            </h1>
+            
+            
+            <p className="text-xl md:text-2xl text-white/90 font-light">
+              人間関係、お金、すべてが愛と光の次元にシフトする
+            </p>
+            
+            <div className="pt-8">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                スターシード覚醒<br />銀河統合プログラム
+              </h2>
+            </div>
+            
+            <div className="pt-4">
+              <Button
+                size="lg"
+                asChild
+                className="bg-secondary hover:bg-secondary/90 text-secondary-foreground text-lg px-12 py-6 rounded-full shadow-2xl hover:shadow-secondary/50 transition-all duration-300 hover:scale-105 font-bold w-full md:w-auto text-center justify-center"
+              >
+                <a href="https://lin.ee/2OdYD88" target="_blank" rel="noopener noreferrer">
+                  無料セッションにご予約
+                </a>
+              </Button>
+            </div>
+          </div>
+        </div>
+        
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex items-start justify-center p-2">
+            <div className="w-1 h-3 bg-white/50 rounded-full" />
+          </div>
+        </div>
+      </section>
+
+      {/* Pain Points Section */}
+      <section className="py-24 bg-light-gradient" id="pain-points" data-animate>
+        <div className="container">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              こんなお悩み、ありませんか？
+            </h2>
+            <p className="text-xl text-muted-foreground">
+              あなたは一人ではありません。多くのスターシードが同じ痛みを抱えています。
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            {[
+              "SNSを見るたびに、同じ位置にいた人が輝いているのを見て「なぜ自分はまだここにいるんだろう」と落ち込んでしまう",
+              "本当はもっと軽やかな自分を知っているのに、なぜか動けない。やろうとすると不安や恐怖で止まってしまう",
+              "これまでどんなに辛いことがあっても頑張ってきたけれど、もう限界。疲れ果ててしまった",
+              "変わりたくて色々なセミナーやセッションを受けてきたのに、なかなか大きな変化が出ない",
+              "過去世の重たいもの（魔女時代、巫女時代など）がありすぎて、どこから浄化したらいいのか分からない",
+              "本当に心を許せる仲間に出会えず、人当たりはいいと言われるけれど、実は全然馴染めていない",
+              "ヒーリングやセラピーを学んできたのに、まだその段階ではないと思って、活躍できずにいる",
+              "自分は光の存在だと分かっているのに、理由の分からない重たいものが自分を引っ張っている",
+            ].map((pain, index) => (
+              <Card
+                key={index}
+                className={`border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-lg ${
+                  isVisible["pain-points"] ? "animate-fade-in-up" : "opacity-0"
+                }`}
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <CardContent className="p-6">
+                  <div className="flex gap-4">
+                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center mt-1">
+                      <Check className="w-4 h-4 text-primary" />
+                    </div>
+                    <p className="text-foreground leading-relaxed">{pain}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          
+          <div className="text-center mt-12">
+            <p className="text-lg text-muted-foreground italic">
+              もし一つでも当てはまるなら、このプログラムはあなたのためのものです。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Future Vision Section */}
+      <section className="py-24 relative overflow-hidden" id="vision" data-animate>
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-20"
+          style={{ backgroundImage: "url(/transformation-light.jpg)" }}
+        />
+        <div className="container relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              もし、こうなれたら
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              想像してみてください。本来のあなたに戻ったとき、人生はどれほど軽やかで豊かになるでしょうか。
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {[
+              {
+                icon: <Users className="w-8 h-8" />,
+                title: "銀河の仲間との再会",
+                description: "自然体でありのままの自分でいるだけで、「あなたに会いたかった」と銀河の仲間たちが集まってくる",
+              },
+              {
+                icon: <Heart className="w-8 h-8" />,
+                title: "自己肯定の確立",
+                description: "自己否定のループが終わり、「自分は自分でいい」と心の底から思える",
+              },
+              {
+                icon: <TrendingUp className="w-8 h-8" />,
+                title: "豊かさの自然な流入",
+                description: "ありのままで生きているだけなのに、仕事は喜んで申し込まれ、お金はどんどん豊かになる",
+              },
+              {
+                icon: <Sparkles className="w-8 h-8" />,
+                title: "軽やかな日常",
+                description: "地球の楽しみを満喫しつつ、重たい波動に引きずられることなく、軽やかに日々を楽しめる",
+              },
+              {
+                icon: <Star className="w-8 h-8" />,
+                title: "ライトワークの開花",
+                description: "大好きなライトワークで人や宇宙から必要とされ、軽やかなままビジネスができる",
+              },
+              {
+                icon: <Sparkles className="w-8 h-8" />,
+                title: "愛と光の次元",
+                description: "すべての人間関係、お金、仕事が愛と光の次元にシフトし、人生が根本から変わる",
+              },
+            ].map((item, index) => (
+              <Card
+                key={index}
+                className={`border-0 bg-card/80 backdrop-blur-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 ${
+                  isVisible["vision"] ? "animate-fade-in-up" : "opacity-0"
+                }`}
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <CardContent className="p-8 text-center">
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 text-primary mb-4">
+                    {item.icon}
+                  </div>
+                  <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed">{item.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-24 bg-light-gradient" id="testimonials" data-animate>
+        <div className="container">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              参加者の変化
+            </h2>
+            <p className="text-xl text-muted-foreground mb-4">
+              実際にプログラムに参加された方々の、驚くべき変容をご覧ください。
+            </p>
+            <div className="inline-flex items-center gap-8 text-center">
+              <div>
+                <div className="text-4xl font-bold text-primary">97%</div>
+                <div className="text-sm text-muted-foreground">参加者が大きな変化を実感</div>
+              </div>
+              <div>
+                <div className="text-4xl font-bold text-primary">90日</div>
+                <div className="text-sm text-muted-foreground">平均覚醒期間</div>
+              </div>
+              <div>
+                <div className="text-4xl font-bold text-primary">200+</div>
+                <div className="text-sm text-muted-foreground">覚醒したスターシード</div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {[
+              {
+                title: "外見の劇的な変化",
+                description: "どんどんと美しさが増していって、今まで着ていた服が全部似合わなくなるくらいエネルギーも見た目も別人級に変化した",
+                icon: <Sparkles className="w-6 h-6" />,
+              },
+              {
+                title: "愛への目覚め",
+                description: "本当の意味で人に心を開けなかった方が、私にも愛があったんだと愛に目覚め、愛をベースに行動ができるようになった",
+                icon: <Heart className="w-6 h-6" />,
+              },
+              {
+                title: "収入の大幅な増加",
+                description: "お金のブロックがあった方が、20万～30万円の継続コースがなぜか楽々決まるようになった。プログラム開始前：月収5万円 → 3ヶ月後：月収80万円",
+                icon: <TrendingUp className="w-6 h-6" />,
+              },
+              {
+                title: "ヒーリング能力の開花",
+                description: "ヒーリングに自信がなかった方が、ヒーリング能力を格段にアップし、質も変わっていった",
+                icon: <Star className="w-6 h-6" />,
+              },
+              {
+                title: "高次元意識の獲得",
+                description: "頑張り癖の強い方が、委ねるあり方が身につき、高次元意識で行動ができるようになった",
+                icon: <Sparkles className="w-6 h-6" />,
+              },
+              {
+                title: "自然体での成功",
+                description: "無理に頑張らなくても、自然体でいるだけで仕事が舞い込み、豊かさが循環するようになった",
+                icon: <Star className="w-6 h-6" />,
+              },
+            ].map((testimonial, index) => (
+              <Card
+                key={index}
+                className={`border-2 border-primary/20 hover:border-primary/50 transition-all duration-300 hover:shadow-xl ${
+                  isVisible["testimonials"] ? "animate-fade-in-up" : "opacity-0"
+                }`}
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <CardContent className="p-6">
+                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-secondary/10 text-secondary mb-4">
+                    {testimonial.icon}
+                  </div>
+                  <h3 className="text-lg font-bold mb-3">{testimonial.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed">{testimonial.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Problem Root Cause Section */}
+      <section 
+        className="py-24 relative" 
+        id="root-cause" 
+        data-animate
+        style={{
+          backgroundImage: "url(/nature-path.jpg)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed"
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-background/85 via-background/70 to-background/85"></div>
+        <div className="container max-w-4xl relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              なぜ変われないのか？
+            </h2>
+            <p className="text-xl text-muted-foreground">
+              愛と光の次元にワープが実現していないのは、<br />
+              <span className="text-primary font-semibold">あなたのせいではありません</span>
+            </p>
+          </div>
+          
+          <div className="space-y-8">
+            {[
+              {
+                number: "01",
+                title: "前世などの自分ではどうしようもないカルマを背負ってきた",
+                description: "スターシードは過去に能力を発揮して嫌な思いをし、自分で封印したり誰かに封印されたりしています。レムリアの時代、魔女時代、巫女時代など、深い傷が今世にも影響を与えているのです。",
+              },
+              {
+                number: "02",
+                title: "土の時代の重たい習慣がやっと身についたところで、次元上昇が始まった",
+                description: "慣れない地球のルールにやっと馴染んだ頃に、地球の次元上昇が始まりました。風の時代への移行により、これまでの常識が通用しなくなり、ついていくのが大変なのです。",
+              },
+              {
+                number: "03",
+                title: "光が強い分、同じくらいの闇を体験するのがスターシードの特徴",
+                description: "本来の光に帰るために闇を見る必要があり、重たいものを体験してきました。これは成長のプロセスですが、一人で乗り越えるのは困難です。",
+              },
+            ].map((item, index) => (
+              <Card
+                key={index}
+                className={`border-l-4 border-l-primary ${
+                  isVisible["root-cause"] ? "animate-fade-in-up" : "opacity-0"
+                }`}
+                style={{ animationDelay: `${index * 150}ms` }}
+              >
+                <CardContent className="p-8">
+                  <div className="flex gap-6">
+                    <div className="flex-shrink-0">
+                      <div className="text-5xl font-bold text-primary/20">{item.number}</div>
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+                      <p className="text-muted-foreground leading-relaxed">{item.description}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          
+          <div className="mt-12 text-center">
+            <p className="text-lg text-muted-foreground">
+              だからこそ、<span className="text-primary font-semibold">特別なサポート</span>が必要なのです。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Method Section */}
+      <section className="py-24 bg-galaxy-gradient text-white relative overflow-hidden" id="method" data-animate>
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-10"
+          style={{ backgroundImage: "url(/sacred-geometry.jpg)" }}
+        />
+        <div className="container relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              銀河統合プログラムの3つの柱
+            </h2>
+            <p className="text-xl text-white/80">
+              他のヒーリングとは一線を画す、覚醒特化型のアプローチ
+            </p>
+          </div>
+          
+          <div className="max-w-5xl mx-auto space-y-12">
+            {[
+              {
+                pillar: "第一の柱",
+                title: "高次元意識に目覚め、軽やかにこの地上を生きる",
+                description: "地球の次元上昇の流れに乗り、肉体を持ったまま高次元意識で生きる「全体昇天」を実現します。これは従来の悟りを超えた、新しい時代の生き方です。",
+              },
+              {
+                pillar: "第二の柱",
+                title: "スターシード覚醒で宇宙や惑星意識を呼び覚ます",
+                description: "3つの壁を突破します。①自分ではどうにもならない重たいものを外す ②能力を最大限に発揮できるようにする ③宇宙的感覚を思い出す。あなたの本来の力を取り戻します。",
+              },
+              {
+                pillar: "第三の柱",
+                title: "レムリア覚醒メソッドで確実に目覚めへと導く",
+                description: "他のヒーリングとは異なる、覚醒特化型のエネルギー。深い癒しと浄化力で根深いものをクリアにし、闇と光の統合を強力に実現します。今の時代の次元上昇にマッチしたエネルギーです。",
+              },
+            ].map((item, index) => (
+              <div
+                key={index}
+                className={`bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:bg-white/15 transition-all duration-300 ${
+                  isVisible["method"] ? "animate-fade-in-up" : "opacity-0"
+                }`}
+                style={{ animationDelay: `${index * 150}ms` }}
+              >
+                <div className="text-secondary text-sm font-semibold tracking-widest uppercase mb-2">
+                  {item.pillar}
+                </div>
+                <h3 className="text-2xl font-bold mb-4">{item.title}</h3>
+                <p className="text-white/80 leading-relaxed">{item.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Comparison Section */}
+      <section className="py-24" id="comparison" data-animate>
+        <div className="container max-w-5xl">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              なぜレムリア覚醒メソッドなのか？
+            </h2>
+            <p className="text-xl text-muted-foreground">
+              他のヒーリングとの決定的な違い
+            </p>
+          </div>
+          
+          <Card className="border-2 border-primary/20">
+            <CardContent className="p-8">
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b-2 border-primary/20">
+                      <th className="text-left py-4 px-2 md:px-4 font-bold whitespace-nowrap text-sm md:text-base">特徴</th>
+                      <th className="text-center py-4 px-2 md:px-4 font-bold text-muted-foreground whitespace-nowrap text-sm md:text-base">一般的なヒーリング</th>
+                      <th className="text-center py-4 px-2 md:px-4 font-bold text-primary whitespace-nowrap text-sm md:text-base">レムリア覚醒メソッド</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      {
+                        feature: "習得の難易度",
+                        general: "修行や訓練が必要",
+                        lemuria: "誰でも簡単に扱える",
+                      },
+                      {
+                        feature: "作用の深さ",
+                        general: "表面的な癒し",
+                        lemuria: "根深いものに強力に作用",
+                      },
+                      {
+                        feature: "効果の範囲",
+                        general: "精神面または肉体面",
+                        lemuria: "肉体面・精神面の両方",
+                      },
+                      {
+                        feature: "目指すゴール",
+                        general: "癒しや浄化",
+                        lemuria: "覚醒・光を溢れさせる",
+                      },
+                      {
+                        feature: "時代との適合",
+                        general: "従来の方法",
+                        lemuria: "目覚めの時代にマッチ",
+                      },
+                      {
+                        feature: "変化の速度",
+                        general: "徐々に変化",
+                        lemuria: "1回で劇的な変化",
+                      },
+                    ].map((row, index) => (
+                      <tr key={index} className="border-b border-border">
+                        <td className="py-4 px-2 md:px-4 font-semibold whitespace-nowrap text-sm md:text-base">{row.feature}</td>
+                        <td className="py-4 px-2 md:px-4 text-center text-muted-foreground whitespace-nowrap text-sm md:text-base">{row.general}</td>
+                        <td className="py-4 px-2 md:px-4 text-center text-primary font-semibold whitespace-nowrap text-sm md:text-base">{row.lemuria}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              
+              <div className="mt-8 p-6 bg-primary/5 rounded-lg border-l-4 border-l-primary">
+                <p className="text-lg font-semibold mb-2">参加者の声</p>
+                <p className="text-muted-foreground italic">
+                  「1回のヒーリングだけでも『今まで何だったんだろう』と思うほどの変化がありました。これまで受けてきたどのセッションとも全く違います。」
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Instructor Section */}
+      <section 
+        className="py-24 relative" 
+        id="instructor" 
+        data-animate
+        style={{
+          backgroundImage: "url(/anela-portrait.jpg)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed"
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/75 to-background/90"></div>
+        <div className="container max-w-5xl relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              講師紹介
+            </h2>
+            <p className="text-xl text-muted-foreground">
+              Anela（アネラ）
+            </p>
+          </div>
+          
+          <Card className="border-0 shadow-xl">
+                        <CardContent className="p-8 md:p-12">
+              <div className="grid md:grid-cols-2 gap-12 items-center">
+                <div className="relative aspect-square rounded-2xl overflow-hidden shadow-2xl">
+                  <img
+                    src="/anela-portrait.jpg"
+                    alt="Anela（アネラ）"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                
+                <div className="space-y-6">
+                <div>
+                  <h3 className="text-2xl font-bold mb-4 text-center">スターシード覚醒ナビゲーター</h3>
+                  <div className="space-y-4 text-muted-foreground leading-relaxed">
+                    <p>
+                      小さい頃から生きづらさを感じ、空を見ては「帰りたい」と思っていました。ある時、宇宙語が降りてきて、スターシードとしての覚醒が始まりました。
+                    </p>
+                    <p>
+                      月5万円しか稼げなかったヒーラーが、意識と霊的開きによって<span className="text-primary font-semibold">最高月収440万円</span>に。この経験から、意識の変容がいかに現実を変えるかを身をもって知りました。
+                    </p>
+                    <p>
+                      レムリアの時代を色濃く持ってきている魂で、レムリアの覚醒エネルギーに繋がりました。<span className="text-primary font-semibold">1000万円以上の自己投資</span>をしてきた経験を活かし、最速最短のショートカットを提供しています。
+                    </p>
+                    <p className="text-primary font-semibold text-center text-lg">
+                      「あなたが本来の光を取り戻し、この地球で軽やかに輝くこと。それが私の使命です。」
+                    </p>
+                  </div>
+                </div>
+                </div>
+              </div>
+            </CardContent>
+
+          </Card>
+        </div>
+      </section>
+
+      {/* Program Details Section */}
+      <section className="py-24" id="program" data-animate>
+        <div className="container max-w-4xl">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              プログラム詳細
+            </h2>
+            <p className="text-2xl font-bold text-primary mb-4">
+              クリスタルポーションプログラム（CPP）
+            </p>
+            <p className="text-xl text-muted-foreground">
+              スターシード覚醒 銀河統合プログラム
+            </p>
+          </div>
+          
+          <Card className="border-2 border-primary/20 mb-12">
+            <CardContent className="p-8">
+              <h3 className="text-2xl font-bold mb-6 text-center">プログラムで得られるもの</h3>
+              <div className="space-y-4">
+                {[
+                  "重たいエネルギーを解放し、意識を開き、高次元意識を思い出す",
+                  "スターシードとして宇宙的感覚を呼び覚ます",
+                  "レムリア覚醒メソッドとエネルギーのサポートで目覚めを加速",
+                  "愛と光の次元にシフトし、人生のあらゆる面が好転する",
+                  "本来の能力を最大限に発揮し、ライトワーカーとして活躍する",
+                ].map((item, index) => (
+                  <div key={index} className="flex gap-3 items-start">
+                    <Check className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
+                    <p className="text-lg">{item}</p>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+          
+          <div className="grid md:grid-cols-2 gap-8 mb-12">
+            <Card className="border-2 border-green-500/20 bg-green-50/50">
+              <CardContent className="p-6">
+                <h3 className="text-xl font-bold mb-4 text-green-700">このプログラムに向いている人</h3>
+                <ul className="space-y-2">
+                  {[
+                    "目覚めていくことに対して覚悟ができる、真剣な一択の人",
+                    "アセンション予定の人",
+                    "スターシード覚醒し、高次元意識で生きる一択の人",
+                    "本来の自分を取り戻し、軽やかに生きたい人",
+                    "ライトワーカーとして活躍したい人",
+                  ].map((item, index) => (
+                    <li key={index} className="flex gap-2 items-start">
+                      <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                      <span className="text-sm">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+            
+            <Card className="border-2 border-red-500/20 bg-red-50/50">
+              <CardContent className="p-6">
+                <h3 className="text-xl font-bold mb-4 text-red-700">このプログラムに向いていない人</h3>
+                <ul className="space-y-2">
+                  {[
+                    "目覚める覚悟もなく、ただ話を聞いてもらいたいだけの方",
+                    "本当の自分で生きたくない方",
+                    "霊能力を重視する方",
+                    "他人任せで自分で行動しない方",
+                    "すぐに結果を求める方",
+                  ].map((item, index) => (
+                    <li key={index} className="flex gap-2 items-start">
+                      <span className="text-red-600 flex-shrink-0 mt-0.5">✕</span>
+                      <span className="text-sm">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+          
+          <div className="text-center p-8 bg-primary/5 rounded-2xl border-2 border-primary/20">
+            <p className="text-lg font-semibold mb-2">重要なメッセージ</p>
+            <p className="text-muted-foreground">
+              このプログラムは、<span className="text-primary font-semibold">本気で人生を変えたい方</span>のためのものです。<br />
+              覚悟を持って一歩を踏み出す準備ができている方だけ、次にお進みください。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Urgency Section */}
+      <section className="py-24 bg-galaxy-gradient text-white relative overflow-hidden" id="urgency" data-animate>
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-10"
+          style={{ backgroundImage: "url(/cosmic-connection.jpg)" }}
+        />
+        <div className="container max-w-4xl relative z-10">
+          <div className="text-center mb-16">
+            <div className="inline-block mb-6">
+              <span className="text-secondary text-sm font-bold tracking-widest uppercase bg-secondary/20 px-8 py-3 rounded-full">
+                残り3名様 | 募集終了まであと{Math.ceil((new Date('2025-12-31').getTime() - Date.now()) / (1000 * 60 * 60 * 24))}日
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              なぜ、今なのか？
+            </h2>
+            <p className="text-xl text-white/80">
+              宇宙のタイミングは待ってくれません
+            </p>
+          </div>
+          
+          <div className="space-y-8">
+            {[
+              {
+                title: "今は宇宙のアセンション（次元上昇）の流れが来ている",
+                description: "地球が大きな鍵を握っており、この波に乗る必要があります。この千載一遇のチャンスを逃すと、次のタイミングは遠い未来になるかもしれません。",
+              },
+              {
+                title: "誰でも簡単に目覚められる時代になっている",
+                description: "大変な修行をしなくても、目覚めを決めた魂であれば誰もが目覚めていける時代です。このエネルギーの高まりは今だけの特別な状況です。",
+              },
+              {
+                title: "このタイミングを逃すと、次の転生も重たい世界になる可能性がある",
+                description: "宇宙のタイミングは待ってくれません。もっと自分に対して真剣になればよかったと後悔したくないなら、今この瞬間に決断する必要があります。",
+              },
+            ].map((item, index) => (
+              <div
+                key={index}
+                className={`bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 ${
+                  isVisible["urgency"] ? "animate-fade-in-up" : "opacity-0"
+                }`}
+                style={{ animationDelay: `${index * 150}ms` }}
+              >
+                <h3 className="text-2xl font-bold mb-4">{item.title}</h3>
+                <p className="text-white/80 leading-relaxed">{item.description}</p>
+              </div>
+            ))}
+          </div>
+          
+          <div className="mt-12 space-y-6">
+            <div className="text-center p-8 bg-red-900/30 backdrop-blur-sm rounded-2xl border-2 border-red-500/50">
+              <p className="text-xl font-bold text-red-200 mb-4">
+                このタイミングを逃すと、あなたが失うもの
+              </p>
+              <div className="grid md:grid-cols-3 gap-4 text-left">
+                <div className="bg-background/10 p-4 rounded-lg">
+                  <div className="text-red-300 font-bold mb-2">時間的損失</div>
+                  <div className="text-white/80 text-sm">さらに5年、10年と重たい人生を続けることに</div>
+                </div>
+                <div className="bg-background/10 p-4 rounded-lg">
+                  <div className="text-red-300 font-bold mb-2">経済的損失</div>
+                  <div className="text-white/80 text-sm">本来得られるはずの豊かさを手放すことに</div>
+                </div>
+                <div className="bg-background/10 p-4 rounded-lg">
+                  <div className="text-red-300 font-bold mb-2">精神的損失</div>
+                  <div className="text-white/80 text-sm">「あの時決断していれば」という後悔</div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="text-center p-8 bg-secondary/20 backdrop-blur-sm rounded-2xl border-2 border-secondary">
+              <p className="text-2xl font-bold text-secondary mb-2">
+                今、この瞬間が、あなたの人生の転換点です。
+              </p>
+              <p className="text-white/90">
+                あなたも今世、このタイミングを待って生まれてきているはずです。
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section 
+        className="py-24 relative" 
+        id="cta-section" 
+        data-animate
+        style={{
+          backgroundImage: "url(/anela-meditation.jpg)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed"
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/70 via-background/80 to-background/90"></div>
+        <div className="container max-w-4xl relative z-20">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              無料スターシード覚醒セッション
+            </h2>
+            <p className="text-xl text-muted-foreground">
+              まずは無料セッションで、あなたの覚醒への道筋を明確にしましょう
+            </p>
+          </div>
+          
+          <Card className="border-2 border-primary/20 shadow-2xl">
+            <CardContent className="p-8 md:p-12">
+              <div className="space-y-8">
+                <div>
+                  <h3 className="text-2xl font-bold mb-6 text-center">無料セッションの内容</h3>
+                  <div className="space-y-4">
+                    {[
+                      "覚醒の妨げになっているものを見抜く",
+                      "あなたの銀河意識を思い出す時間",
+                      "光の次元にシフトするためのプランニング",
+                      "あなたの状況に最適な進み方を一緒に導き出す",
+                    ].map((item, index) => (
+                      <div key={index} className="flex gap-3 items-start">
+                        <Check className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
+                        <p className="text-lg">{item}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <div className="p-6 bg-secondary/10 rounded-lg border-l-4 border-l-secondary">
+                    <p className="font-semibold mb-2">🎁 特典</p>
+                    <p className="text-muted-foreground">
+                      本来のあなたにアクティベーションするエネルギーワーク瞑想動画を無料プレゼント
+                    </p>
+                  </div>
+                  
+                  <div className="p-6 bg-primary/5 rounded-lg border border-primary/20">
+                    <p className="text-sm text-muted-foreground mb-3">この無料セッションだけでも、以下の価値があります：</p>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-primary">通常50,000円</div>
+                        <div className="text-xs text-muted-foreground">個別セッション相当</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-primary">今だけ無料</div>
+                        <div className="text-xs text-muted-foreground">完全無料で体験</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="text-center space-y-4">
+                  <Button
+                    size="lg"
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg md:text-xl px-8 md:px-16 py-8 rounded-full shadow-2xl hover:shadow-primary/50 transition-all duration-300 hover:scale-105 w-full md:w-auto font-bold text-center justify-center whitespace-normal h-auto"
+                    asChild
+                  >
+                    <a href="https://lin.ee/2OdYD88" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center">
+                      今すぐLINEから<br className="md:hidden" />無料セッションにご予約
+                    </a>
+                  </Button>
+                  <div className="space-y-2">
+                    <p className="text-sm text-red-600 font-semibold">
+                      ※ 残り3名様のみ。枠が埋まり次第、予告なく終了します
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      無料セッションは、あなたにとってリスクゼロの一歩です。<br />
+                      ただ、この一歩が、あなたの人生を大きく変えるかもしれません。
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Closing Section */}
+      <section className="py-24 relative overflow-hidden" id="closing" data-animate>
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url(/abundance-energy.jpg)" }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background" />
+        
+        <div className="container max-w-4xl relative z-10">
+          <div className="text-center space-y-12">
+            <div>
+              <h2 className="text-4xl md:text-5xl font-bold mb-8">
+                あなたには3つの道があります
+              </h2>
+              
+              <div className="grid md:grid-cols-3 gap-6 mb-12">
+                {[
+                  {
+                    number: "1",
+                    title: "これまで通り",
+                    description: "重たい意識で生きていく道",
+                  },
+                  {
+                    number: "2",
+                    title: "普通の人間として",
+                    description: "自分を発揮しないでいく道",
+                  },
+                  {
+                    number: "3",
+                    title: "高次元意識で",
+                    description: "ライトワーカーとして活躍する道",
+                  },
+                ].map((path, index) => (
+                  <Card
+                    key={index}
+                    className={`${
+                      index === 2
+                        ? "border-2 border-primary shadow-xl scale-105"
+                        : "border border-border opacity-70"
+                    }`}
+                  >
+                    <CardContent className="p-6 text-center">
+                      <div
+                        className={`text-4xl font-bold mb-3 ${
+                          index === 2 ? "text-primary" : "text-muted-foreground"
+                        }`}
+                      >
+                        {path.number}
+                      </div>
+                      <h3 className="text-lg font-bold mb-2">{path.title}</h3>
+                      <p className="text-sm text-muted-foreground">{path.description}</p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+              
+              <p className="text-2xl font-bold mb-8">
+                あなたはどの道を選びますか？
+              </p>
+            </div>
+            
+            <div className="max-w-3xl mx-auto space-y-6 text-lg leading-relaxed">
+              <p>
+                最も重要なことは、<span className="text-primary font-semibold">今世で目覚めて本来の自分に還ること</span>です。
+              </p>
+              <p>
+                このタイミングを待って、あなたも今世生まれてきているはずです。
+              </p>
+              <p>
+                スターシードは地球の次元上昇のサポートに来ています。
+              </p>
+              <p className="text-xl font-semibold text-primary">
+                まずあなたから目覚めていく時です。
+              </p>
+            </div>
+            
+            <div className="pt-8">
+              <Button
+                size="lg"
+                asChild
+                className="bg-secondary hover:bg-secondary/90 text-secondary-foreground text-base sm:text-lg md:text-xl px-4 py-6 md:px-16 md:py-8 rounded-full shadow-2xl hover:shadow-secondary/50 transition-all duration-300 hover:scale-105 font-bold w-full md:w-auto text-center justify-center whitespace-normal h-auto leading-relaxed"
+              >
+                <a href="https://lin.ee/2OdYD88" target="_blank" rel="noopener noreferrer">
+                  無料セッションにご予約
+                </a>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-12 bg-foreground text-background">
+        <div className="container text-center">
+          <p className="text-lg font-serif mb-2">スターシード覚醒 銀河統合プログラム</p>
+          <p className="text-sm opacity-80">© 2026 Anela. All rights reserved.</p>
+        </div>
+      </footer>
+    </div>
+  );
+}
