@@ -51,7 +51,7 @@ export default function Home() {
             </div>
             
             <h1 className="text-2xl sm:text-3xl md:text-6xl lg:text-7xl font-bold text-white leading-tight" style={{ textShadow: '0 4px 20px rgba(0,0,0,0.8), 0 2px 10px rgba(0,0,0,0.6)' }}>
-              地球の重い制限を大解放して、<br className="sm:hidden" />
+              地球の重い制限を大解放して、<br />
               <span className="text-secondary" style={{ textShadow: '0 4px 20px rgba(212,175,55,0.8), 0 2px 10px rgba(0,0,0,0.6)' }}>本来の軽やかな自分</span>に還る
             </h1>
             
