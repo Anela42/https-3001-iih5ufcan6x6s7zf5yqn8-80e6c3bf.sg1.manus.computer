@@ -50,9 +50,9 @@ export default function Home() {
               </span>
             </div>
             
-            <h1 className="text-[1.4rem] sm:text-3xl md:text-6xl lg:text-7xl font-bold text-white leading-tight whitespace-nowrap sm:whitespace-normal" style={{ textShadow: '0 4px 20px rgba(0,0,0,0.8), 0 2px 10px rgba(0,0,0,0.6)' }}>
-              地球の重い制限を大解放して、<br />
-              <span className="text-secondary" style={{ textShadow: '0 4px 20px rgba(212,175,55,0.8), 0 2px 10px rgba(0,0,0,0.6)' }}>本来の軽やかな自分</span>に還る
+            <h1 className="text-[1.4rem] sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight" style={{ textShadow: '0 4px 20px rgba(0,0,0,0.8), 0 2px 10px rgba(0,0,0,0.6)' }}>
+              <span className="inline-block whitespace-nowrap">地球の重い制限を大解放して、</span><br />
+              <span className="text-secondary inline-block" style={{ textShadow: '0 4px 20px rgba(212,175,55,0.8), 0 2px 10px rgba(0,0,0,0.6)' }}>本来の軽やかな自分</span>に還る
             </h1>
             
             
