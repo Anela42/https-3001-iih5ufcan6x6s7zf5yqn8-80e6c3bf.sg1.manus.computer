@@ -901,7 +901,26 @@ export default function Home() {
       {/* Footer */}
       <footer className="py-12 bg-foreground text-background">
         <div className="container text-center">
-          <p className="text-lg font-serif mb-2">スターシード覚醒 銀河統合プログラム</p>
+          <p className="text-lg font-serif mb-4">スターシード覚醒 銀河統合プログラム</p>
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-4 text-sm">
+            <a 
+              href="/tokutei.html" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hover:underline opacity-80 hover:opacity-100 transition-opacity"
+            >
+              特定商取引法に基づく表記
+            </a>
+            <span className="hidden sm:inline opacity-50">|</span>
+            <a 
+              href="/privacy.html" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hover:underline opacity-80 hover:opacity-100 transition-opacity"
+            >
+              プライバシーポリシー
+            </a>
+          </div>
           <p className="text-sm opacity-80">© 2026 Anela. All rights reserved.</p>
         </div>
       </footer>
